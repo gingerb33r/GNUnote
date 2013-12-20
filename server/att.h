@@ -1,3 +1,6 @@
+#ifndef ATT_H
+#define ATT_H
+
 typedef struct user_info{
     const char *username; /*For example: gingerb33r*/
     const char *email; /*For example: interjection@gnu.com*/
@@ -18,3 +21,5 @@ typedef struct MySQL_Details{ /*Wiil be used in conjunction with MySQL linker. T
     const char *pass; /*The password of the user connecting to the server.*/
     const char *DB; /*Database name, for example: wreckinskrubs*/
 } MYSQL_INFO;
+
+#endif
