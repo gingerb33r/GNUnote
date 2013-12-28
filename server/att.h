@@ -1,6 +1,10 @@
 #ifndef ATT_H
 #define ATT_H
 
+enum signal_codes {
+    KILL_SIGNAL
+};
+
 typedef struct user_info{
     const char *username; /*For example: gingerb33r*/
     const char *email; /*For example: interjection@gnu.com*/

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "functions.h"
 
 void save_one()
@@ -17,22 +18,25 @@ void add_note(int note_num, const char *title, const char *text, NOTE *note,
 
 int main(int argc, char **argv)
 {
-    MYSQL *conn;
-    MYSQL_INFO *info = malloc(sizeof(*info)); /*Allocated the amount of memory that can be accessed here.*/
-    info->IP = "192.168.1.235"; info->user = "YOLO"; 
-    info->pass = "1"; info->DB = "test";
-    printf("Freenote: The power of free thought.\n");
-    printf("Initializing Freenote server...\n");
-    
-    if((conn = MYSQL_CONNECT_DB(info)) == (MYSQL *) 0){
-        printf("MySQL connection failed. Exiting.\n");
+    /*Initialization functions only. There shall be no processes defined in the main function, only executed.*/
+    initscr();
+    cbreak();
+    int mainloop;
+    printw("Freenote: The power of free thought.\n");
+    printw("Initializing Freenote server...\n");
+    refresh();
+    if((mainloop = sql_loop()) == 1)
+    {
+        printw("Freenote exited with an error.\n The program will automatically shut down in 10 seconds.\n");
+        refresh();
+        sleep(10);
+        getch();
+        endwin();
+        printf("Freenote exited with an error! Check the log file for more information.\n");
         return 1;
-    };
-    free(info);
-    int c;
-    while((c = getchar()) != EOF)
-        ; //Do nothing loop, waits for a null terminator.
-    printf("%d\n", EOF);
-    EXIT_SERVER(conn);
+    } else {
+        endwin();
+        return 0;
+    }
     return 0;
 }
